@@ -2,18 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/styles/all.min.css" />
+    <link rel="stylesheet" href="/styles/framework.css" />
+    <link rel="stylesheet" href="/styles/master.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+
 </head>
 <body>
-    <nav>
-        <ul>
-            <li>Dashboard</li>
-            <li><a href="/candidats">candidats</a></li>
-            <li><a >Profile</a></li>
-        </ul>
-    </nav>
-    <%- body %>
+    <div class="page d-flex">
+        <div class="sidebar bg-white p-20 p-relative">
+            <h3 class="p-relative txt-c mt-0">Elzero</h3>
+            <ul>
+                <li>
+                    <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="/users">
+                      <i class="fa-regular fa-user fa-fw"></i>
+                      <span>Profil</span>
+                    </a>
+                  </li>
+              <li>
+                <a  class="active d-flex align-center fs-14 c-black rad-6 p-10" href="/candidats" >
+                <i class="fa-regular fa-chart-bar fa-fw"></i> 
+                <span> liste des candidats</span>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="/candidats" >
+                  <i class="fa-solid fa-gear fa-fw"></i>
+                  <span>liste des favoris</span>
+                </a>
+              </li>
+              
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                  <i class="fa-solid fa-diagram-project fa-fw"></i>
+                  <span>Resultat Elections</span>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                  <i class="fa-solid fa-graduation-cap fa-fw"></i>
+                  <span>Deconnexion</span>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                  <i class="fa-regular fa-circle-user fa-fw"></i>
+                  <span>Friends</span>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                  <i class="fa-regular fa-file fa-fw"></i>
+                  <span>Files</span>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                  <i class="fa-regular fa-credit-card fa-fw"></i>
+                  <span>Plans</span>
+                </a>
+              </li>
+            </ul>
+        </div>
+        <div class="content w-full">
+            <!-- Start Head -->
+            <div class="head bg-white p-15 between-flex">
+                <div class="search p-relative">
+                    <input class="p-10" type="search" placeholder="Type A Keyword" />
+                </div>
+                <div class="icons d-flex align-center">
+                    <span class="notification p-relative">
+                        <i class="fa-regular fa-bell fa-lg"></i>
+                    </span>
+                    <img src="images/avatar.png" alt="" />
+                </div>
+            </div>
+            
+                <main>
+                    <%- body %>
+                </main>
+            
+            
+        </div>
+    </div>
 </body>
 </html>

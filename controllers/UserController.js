@@ -13,7 +13,7 @@ const UserController = {
   all: async (req, res) => {
     try {
       let allUsers = await UserModel.find();
-      res.json(allUsers);
+      res.render('profil',{allUsers})
     } catch (error) {
       res.status(500).send(error);
     }

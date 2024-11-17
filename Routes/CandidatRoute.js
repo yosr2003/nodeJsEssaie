@@ -4,6 +4,16 @@ import CandidatController from "../controllers/CandidatController.js"; // Correc
 const route = express.Router();
 
 route.get("/candidats", CandidatController.all); 
+route.get('/DetailsCandidats', (req, res) => {
+    res.render('detailsCandidats'); 
+  });
+route.get('/Favoris', (req, res) => {
+    res.render('Favoris'); 
+  }); 
+  route.get('/resultatElection', (req, res) => {
+    res.render('resultatElection'); 
+  });  
+  
 route.post("/candidats/create", CandidatController.create);
 
 

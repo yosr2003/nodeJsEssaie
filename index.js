@@ -6,15 +6,18 @@ import dotenv from "dotenv"; // Import dotenv for loading environment variables
 import route from "./Routes/UserRoute.js";
 import candidatRoute from "./Routes/CandidatRoute.js";
 import CommentRoutes from "./Routes/CommentRoutes.js";
+import authRegister from "./Routes/AuthRegister.js";
 import ejsLayout from 'express-ejs-layouts';
 
 // Initialize Express app
 const app = express();
+
 //ejs steps
 app.set("view engine","ejs");
 app.use(ejsLayout);
 // etape css..
 app.use(express.static("public"));
+app.use(express.static("docjs"));
 //..
 app.set('layout','layout');
 //analyse form html
@@ -26,6 +29,7 @@ app.use(express.json());
 app.use(route); 
 app.use(candidatRoute); 
 app.use(CommentRoutes); 
+app.use(authRegister); 
 
 
 

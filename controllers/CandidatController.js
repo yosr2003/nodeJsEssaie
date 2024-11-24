@@ -4,15 +4,121 @@ import UserModel from "../Models/User.js"; // Ensure this imports the correct Mo
 const CandidatController = { 
    all: async (req, res) => {
     try {
-      let allCandidats = await CandidatModel.find();
+      
+      let allCandidats = await CandidatModel.find().populate('FavorisésPar');
+      //juste pour le moment
       const cin = req.params.cin; 
-      let found = await UserModel.findOne({ cin: cin });  
+      let found = await UserModel.findOne({ cin: cin }); 
+      //juste pour le moment 
      res.render('view_candidats',{allCandidats, found});
      
     } catch (error) {
       res.status(500).send(error);
     }
   },
+  toggleFavorite : async (req, res) => {
+    try {
+      const { candidatId, userId } = req.body;
+  
+      // Find the candidate and user in the database
+      const candidat = await CandidatModel.findById(candidatId);
+      const user = await UserModel.findById(userId);
+  
+      if (!candidat || !user) {
+        return res.status(404).json({ message: 'Candidat or User not found' });
+      }
+  
+      // Toggle the favorite status in Candidat
+      if (candidat.FavorisésPar.includes(userId)) {
+        // Remove the user from the favorites list in Candidat
+        candidat.FavorisésPar.pull(userId);
+      } else {
+        // Add the user to the favorites list in Candidat
+        candidat.FavorisésPar.push(userId);
+      }
+  
+      // Toggle the favorite status in User
+      if (user.CandidatsFavoris.includes(candidatId)) {
+        // Remove the candidate from the favorites list in User
+        user.CandidatsFavoris.pull(candidatId);
+      } else {
+        // Add the candidate to the favorites list in User
+        user.CandidatsFavoris.push(candidatId);
+      }
+  
+      // Save both the updated Candidat and User documents
+      await Promise.all([candidat.save(), user.save()]);
+  
+      res.status(200).json({ message: 'Favorite status updated successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating favorite status', error });
+    }
+    },
+  favorites: async (req, res) => {
+    try {
+      const cin = req.params.cin; // Get user's CIN from request parameters
+  
+      // Find the user by CIN and populate the favorites populate is very important
+      let found = await UserModel.findOne({ cin: cin }).populate('CandidatsFavoris');
+  
+      if (!found) {
+        return res.status(404).send('User not found');
+      }
+  
+      // Pass only the favorites to the view
+      const favoriteCandidats = found.CandidatsFavoris;
+  
+      res.render('view_candidats', { allCandidats:favoriteCandidats, found});
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
+  searchCandidate : async (req, res) => {
+    try {
+      const { name, cinUser } = req.query; // Extract search term and user CIN from query
+  
+      // Split the name into two parts (nom and prenom) using space as the delimiter
+      const nameParts = name.split(' ');
+  
+      let nom = nameParts[0]; // The first part is the 'nom'
+      let prenom = nameParts[1] || ''; // The second part, if available, is the 'prenom'
+  
+      // Build the search query based on the availability of 'nom' and 'prenom'
+      const query = {
+        $or: []
+      };
+  
+      if (nom) {
+        // Search for 'nom' if it's provided
+        query.$or.push({ nom: { $regex: new RegExp(`^${nom}$`, 'i') } });
+      }
+  
+      if (prenom) {
+        // Search for 'prenom' if it's provided
+        query.$or.push({ prenom: { $regex: new RegExp(`^${prenom}$`, 'i') } });
+      }
+  
+      // If neither 'nom' nor 'prenom' is provided, return an error
+      if (query.$or.length === 0) {
+        return res.status(400).render('error', { message: 'Please enter a name to search for.' });
+      }
+  
+      // Search for a candidate based on the constructed query
+      const candidate = await CandidatModel.findOne(query);
+  
+      if (!candidate) {
+        // If no candidate is found, return an error
+        return res.status(404).render('error', { message: 'Candidate not found!' });
+      }
+  
+      // Redirect to the candidate's details page
+      res.redirect(`/DetailsCandidats/${candidate.cin}/ForUser/${cinUser}`);
+    } catch (error) {
+      console.error('Error searching for candidate by name:', error);
+      res.status(500).render('error', { message: 'An error occurred during the search.' });
+    }
+  },
+  
   find: async (req, res) => {
     try {
       const cin = req.params.cin;  

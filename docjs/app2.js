@@ -21,11 +21,35 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-  function toggleFavorite(icon) {
-    icon.classList.toggle('filled');
-    if (icon.classList.contains('filled')) {
-      icon.classList.replace('fa-regular', 'fa-solid');
+  function toggleFavorite(icon, candidatId, userId) {
+    // Toggle the "filled" state
+    const isFilled = icon.classList.toggle('filled');
+  
+    // Update the icon's class based on the state
+    if (isFilled) {
+      // If filled, show the solid version
+      icon.classList.remove('fa-regular');
+      icon.classList.add('fa-solid');
     } else {
-      icon.classList.replace('fa-solid', 'fa-regular');
+      // If not filled, show the regular version
+      icon.classList.remove('fa-solid');
+      icon.classList.add('fa-regular');
     }
+    fetch('/toggleFavorite', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ candidatId, userId })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    console.log(candidatId, userId);
   }
+  
+  

@@ -15,6 +15,7 @@ const UserController = {
       res.status(500).send(error);  
     }
   },
+ 
 
   all: async (req, res) => {
     try {

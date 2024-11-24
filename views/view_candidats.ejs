@@ -1,6 +1,7 @@
 
      <!-- End Head -->
-     <h6> VOTE N°<%= found.cin %></h6>
+     
+     
      <h1 class="p-relative">Candidats</h1>
      <div class="friends-page d-grid m-20 gap-20">
         <% allCandidats.forEach(c=>{ %>
@@ -11,7 +12,7 @@
          </div>
          <div class="txt-c">
            <img class="rad-half mt-10 mb-10 w-100 h-100" src=" <%= c.PhotoURL %>" alt="" />
-           <h4 class="m-0"> <%= c.nom %>  <%= c.prenom %> </h4>
+           <h4 class="m-0"> <%= c.nom %>  <%= c.prenom %>  </h4>
            <p class="c-grey fs-13 mt-5 mb-0"><%= c.PartPolytique %></p>
          </div>
          <div class="icons fs-14 p-relative">
@@ -37,8 +38,7 @@
           <a class="bg-green c-white btn-shape" href="#">
             <i class="fa-solid fa-thumbs-up"></i> Vote
           </a>
-
-          <i class="fa-regular fa-star favorite-icon" onclick="toggleFavorite(this)"></i>
+          <i class="fa-star <%= c.FavorisésPar.some(user => user._id.toString() === found._id.toString()) ? 'fa-solid' : 'fa-regular' %> favorite-icon" onclick="toggleFavorite(this, '<%= c._id %>', '<%= found._id %>')"></i>
           
           
           
@@ -47,6 +47,5 @@
          </div>
        </div>
        <% }); %> 
-       
-     </div>
+      </div>
 

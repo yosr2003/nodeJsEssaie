@@ -1,6 +1,6 @@
 
      <!-- End Head -->
-     <%= found.nom %>
+     <h6> VOTE N°<%= found.cin %></h6>
      <h1 class="p-relative">Candidats</h1>
      <div class="friends-page d-grid m-20 gap-20">
         <% allCandidats.forEach(c=>{ %>
@@ -10,30 +10,39 @@
            <i class="fa-regular fa-envelope"></i>
          </div>
          <div class="txt-c">
-           <img class="rad-half mt-10 mb-10 w-100 h-100" src="images/friend-01.jpg" alt="" />
-           <h4 class="m-0"> <%= c.nom %></h4>
-           <p class="c-grey fs-13 mt-5 mb-0">JavaScript Developer</p>
+           <img class="rad-half mt-10 mb-10 w-100 h-100" src=" <%= c.PhotoURL %>" alt="" />
+           <h4 class="m-0"> <%= c.nom %>  <%= c.prenom %> </h4>
+           <p class="c-grey fs-13 mt-5 mb-0"><%= c.PartPolytique %></p>
          </div>
          <div class="icons fs-14 p-relative">
            <div class="mb-10">
              <i class="fa-regular fa-face-smile fa-fw"></i>
-             <span>99 Friend</span>
+             <span><%= c.Experience %></span>
            </div>
            <div class="mb-10">
-             <i class="fa-solid fa-code-commit fa-fw"></i>
-             <span>15 Projects</span>
+             <i class="fa-solid fa-location-dot fa-fw"></i>
+             <span><%= c.address %></span>
            </div>
            <div>
-             <i class="fa-regular fa-newspaper fa-fw"></i>
-             <span>25 Articles</span>
+             <i class="fa-solid fa-birthday-cake fa-fw"></i>
+             <span><%= new Date(c.dateNais).toLocaleDateString('fr-FR') %></span>
            </div>
-           <span class="vip fw-bold c-orange">VIP</span>
+     
          </div>
          <div class="info between-flex fs-13">
-           <span class="c-grey">Joined 02/10/2021</span>
+           <span class="c-grey">Voter pour .....</span>
            <div>
-             <a class="bg-blue c-white btn-shape" href="/DetailsCandidats">Profile</a>
-             <a class="bg-red c-white btn-shape" href="#">Remove</a>
+             <a class="bg-blue c-white btn-shape" href="/DetailsCandidats/<%= c.cin %>/ForUser/<%= found.cin %>">Profile</a>
+           <!-- Bouton de Vote -->
+          <a class="bg-green c-white btn-shape" href="#">
+            <i class="fa-solid fa-thumbs-up"></i> Vote
+          </a>
+
+          <i class="fa-regular fa-star favorite-icon" onclick="toggleFavorite(this)"></i>
+          
+          
+          
+
            </div>
          </div>
        </div>

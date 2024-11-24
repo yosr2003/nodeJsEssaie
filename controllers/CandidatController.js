@@ -15,10 +15,17 @@ const CandidatController = {
   },
   find: async (req, res) => {
     try {
-      let found = await CandidatModel.find({ name: req.params.nom });
-      res.json(found);
+      const cin = req.params.cin;  
+      const cin1 = req.params.cin1;  
+      let candidat = await CandidatModel.findOne({ cin: cin });  
+      let found = await UserModel.findOne({ cin: cin1 }); 
+      if (!candidat) {
+        return res.status(404).render('error', { message: 'Candidat non trouvé' });  
+      }
+
+      res.render('detailsCandidats', { candidat , found });
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error);  
     }
   },
 

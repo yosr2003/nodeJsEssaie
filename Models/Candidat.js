@@ -23,6 +23,10 @@ const CandidatSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
   PartPolytique: {
     type: String,
     required: true,

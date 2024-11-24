@@ -1,4 +1,4 @@
-import UserModel from "../Models/User.js"; // Ensure this imports the correct Mongoose model
+import UserModel from "../Models/User.js";
 
 const UserController = {
   find:async (req, res) => {
@@ -35,6 +35,35 @@ const UserController = {
     }
   }
   ,
+   update : async (req, res) => {
+    try {
+      const cin = req.params.cin;
+      const updates = req.body;
+  
+      // Ensure updates only contain allowed fields
+      const allowedFields = ['nom', 'prenom', 'email', 'motDePasse', 'address', 'dateNais'];
+      const filteredUpdates = Object.keys(updates)
+        .filter(field => allowedFields.includes(field))
+        .reduce((obj, field) => {
+          obj[field] = updates[field];
+          return obj;
+        }, {});
+  
+      // Update the user in the database
+      const updatedUser = await UserModel.findOneAndUpdate({ cin }, filteredUpdates, { new: true });
+  
+      if (!updatedUser) {
+        return res.status(404).render('profil', { error: "Utilisateur non trouvé", found: null });
+      }
+  
+      // Re-render the profile page with updated info
+      res.render('profil', { found: updatedUser });
+    } catch (error) {
+      console.error(error);
+      res.status(500).render('profil', { error: "Une erreur s'est produite", found: null });
+    }
+  }
+  
 
  
 };

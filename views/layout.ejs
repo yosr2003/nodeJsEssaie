@@ -13,10 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
-    <script
-    src="https://kit.fontawesome.com/64d58efce2.js"
-    crossorigin="anonymous"
-  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
 
 </head>
 <body>
@@ -24,14 +22,19 @@
         <div class="sidebar bg-white p-20 p-relative">
             <h3 class="p-relative txt-c mt-0">Elzero</h3>
             <ul>
-                <li>
-                    <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="/users">
+             
+
+                   <li>
+                    <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="/users/<%= found.cin %>">
                       <i class="fa-regular fa-user fa-fw"></i>
                       <span>Profil</span>
                     </a>
                   </li>
+
+
+
               <li>
-                <a  class="active d-flex align-center fs-14 c-black rad-6 p-10" href="/candidats" >
+                <a  class="active d-flex align-center fs-14 c-black rad-6 p-10" href="/candidats/<%= found.cin %>" >
                 <i class="fa-regular fa-chart-bar fa-fw"></i> 
                 <span> liste des candidats</span>
                 </a>
@@ -68,7 +71,7 @@
                     <span class="notification p-relative">
                         <i class="fa-regular fa-bell fa-lg"></i>
                     </span>
-                    <img src="images/avatar.png" alt="" />
+                    <img  src="/images/avatar.png" alt="" />
                 </div>
             </div>
             

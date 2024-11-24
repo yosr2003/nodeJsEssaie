@@ -3,7 +3,7 @@ import CandidatController from "../controllers/CandidatController.js"; // Correc
 
 const route = express.Router();
 
-route.get("/candidats", CandidatController.all); 
+route.get("/candidats/:cin", CandidatController.all); 
 route.get('/DetailsCandidats', (req, res) => {
     res.render('detailsCandidats'); 
   });

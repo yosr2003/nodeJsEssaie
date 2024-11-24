@@ -7,10 +7,6 @@ const CandidatSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  nbVote: {
-    type: Number,
-    required: true,
-  },
   nom: {
     type: String,
     required: true,
@@ -24,14 +20,6 @@ const CandidatSchema = new mongoose.Schema({
     required: true,
   },
   address: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  motDePasse: {
     type: String,
     required: true,
   },

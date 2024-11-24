@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
-// Define the schema for the user entity
+
 const userSchema = new mongoose.Schema({
-  // Define the name property with type String and required constraint
   cin: {
     type: Number,
     required: true,
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  // Define the address property with type String and required constraint
+
   address: {
     type: String,
     required: true,
@@ -45,6 +44,4 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true }); 
 
   
-
-// Create and export the Mongoose model for the "users" collection based on the userSchema
 export default mongoose.model("User", userSchema);

@@ -1,6 +1,18 @@
-import CandidatModel from "../Models/Candidat.js"; // Ensure this imports the correct Mongoose model
+import CandidatModel from "../Models/Candidat.js";
+import UserModel from "../Models/User.js"; // Ensure this imports the correct Mongoose model
 
-const CandidatController = {
+const CandidatController = { 
+   all: async (req, res) => {
+    try {
+      let allCandidats = await CandidatModel.find();
+      const cin = req.params.cin; 
+      let found = await UserModel.findOne({ cin: cin });  
+     res.render('view_candidats',{allCandidats, found});
+     
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
   find: async (req, res) => {
     try {
       let found = await CandidatModel.find({ name: req.params.nom });
@@ -10,15 +22,7 @@ const CandidatController = {
     }
   },
 
-  all: async (req, res) => {
-    try {
-      let allCandidats = await CandidatModel.find();
-      //res.json(allCandidats);
-     res.render('view_candidats',{allCandidats})
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  },
+
    create : async (req, res) => {
     try {
       const {

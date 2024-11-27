@@ -34,15 +34,7 @@
            <span class="c-grey">Voter pour .....</span>
            <div>
              <a class="bg-blue c-white btn-shape" href="/DetailsCandidats/<%= c.cin %>/ForUser/<%= found.cin %>">Profile</a>
-           <!-- Bouton de Vote -->
-          <a class="bg-green c-white btn-shape" href="#">
-            <i class="fa-solid fa-thumbs-up"></i> Vote
-          </a>
-          <i class="fa-star <%= c.FavorisésPar.some(user => user._id.toString() === found._id.toString()) ? 'fa-solid' : 'fa-regular' %> favorite-icon" onclick="toggleFavorite(this, '<%= c._id %>', '<%= found._id %>')"></i>
-          
-          
-          
-
+       
            </div>
          </div>
        </div>

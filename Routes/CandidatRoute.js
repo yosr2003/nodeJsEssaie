@@ -10,6 +10,7 @@ route.get('/Favoris', (req, res) => {
   }); 
 route.get("/favoris/:cin",CandidatController.favorites); 
 route.post('/toggleFavorite', CandidatController.toggleFavorite);
+route.post('/voteCandidate', CandidatController.voteCandidate);
 route.get('/resultatElection', (req, res) => {
     res.render('resultatElection'); 
   });  

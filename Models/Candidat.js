@@ -56,6 +56,10 @@ const CandidatSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref:"User"
   }],
+  Comments:[{
+    type: Schema.Types.ObjectId,
+    ref:"Comment"
+  }],
   Programmes: [ProgrammeElectoralSchema], 
 });
 

@@ -1,18 +1,21 @@
 import Comment from "../Models/Comment.js"; 
+import CandidatModel from "../Models/Candidat.js";
+import UserModel from "../Models/User.js"; 
 
 const CommentController = {
-addComment: async (req, res) => {
+  addComment: async (req, res) => {
   try {
     const { userId, candidatId, commentaire } = req.body;
-
+    const candidat = await CandidatModel.findById(candidatId);
+    const user = await UserModel.findById(userId);
     const newComment = new Comment({
       user: userId,
       candidat: candidatId,
       commentaire,
     });
-
-    await newComment.save();
-    res.status(201).json(newComment);
+    candidat.Comments.push(newComment._id);
+    await Promise.all([candidat.save(),newComment.save()]);
+    res.redirect(`/DetailsCandidats/${candidat.cin}/ForUser/${user.cin}#comment-${newComment._id}`);
   } catch (error) {
     res.status(500).json({ message: "Error adding comment", error: error.message });
   }

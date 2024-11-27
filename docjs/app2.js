@@ -20,6 +20,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
 
+  function voter(candidatId, userId) {
+    
+    fetch('/voteCandidate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ candidatId, userId })
+    })
+    .then(response => {
+      if (response.redirected) {
+          window.location.href = response.url;
+      } else {
+          console.error('Voting failed or no redirect response');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    console.log(candidatId, userId);
+  }
+
 
   function toggleFavorite(icon, candidatId, userId) {
     // Toggle the "filled" state
@@ -42,9 +64,12 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       body: JSON.stringify({ candidatId, userId })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+    .then(response => {
+      if (response.redirected) {
+          window.location.href = response.url;
+      } else {
+          console.error('favorite failed or no redirect response');
+      }
     })
     .catch(error => {
       console.error('Error:', error);

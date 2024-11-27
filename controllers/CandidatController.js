@@ -16,6 +16,24 @@ const CandidatController = {
       res.status(500).send(error);
     }
   },
+  
+  voteCandidate : async (req, res) => {
+    try{
+    const { candidatId, userId } = req.body;
+    const candidat = await CandidatModel.findById(candidatId);
+    const user = await UserModel.findById(userId);
+    if (!candidat || !user) {
+      return res.status(404).json({ message: 'Candidat or User not found' });
+    }
+    
+    candidat.usersVotés.push(userId);
+    user.ElectionCandidat=candidatId;
+    await Promise.all([candidat.save(), user.save()]);
+    res.redirect(`/DetailsCandidats/${candidat.cin}/ForUser/${user.cin}`);
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating voting status', error });
+    }
+  },
   toggleFavorite : async (req, res) => {
     try {
       const { candidatId, userId } = req.body;
@@ -49,7 +67,7 @@ const CandidatController = {
       // Save both the updated Candidat and User documents
       await Promise.all([candidat.save(), user.save()]);
   
-      res.status(200).json({ message: 'Favorite status updated successfully' });
+      res.redirect(`/DetailsCandidats/${candidat.cin}/ForUser/${user.cin}`);
     } catch (error) {
       res.status(500).json({ message: 'Error updating favorite status', error });
     }
@@ -73,6 +91,7 @@ const CandidatController = {
       res.status(500).send(error);
     }
   },
+ 
   searchCandidate : async (req, res) => {
     try {
       const { name, cinUser } = req.query; // Extract search term and user CIN from query
@@ -104,7 +123,7 @@ const CandidatController = {
       }
   
       // Search for a candidate based on the constructed query
-      const candidate = await CandidatModel.findOne(query);
+      const candidate = await CandidatModel.findOne(query); 
   
       if (!candidate) {
         // If no candidate is found, return an error
@@ -119,16 +138,22 @@ const CandidatController = {
     }
   },
   
+  
   find: async (req, res) => {
     try {
       const cin = req.params.cin;  
       const cin1 = req.params.cin1;  
-      let candidat = await CandidatModel.findOne({ cin: cin });  
+      let candidat = await CandidatModel.findOne({ cin: cin }).populate({
+        path: 'Comments',
+        populate: {
+          path: 'user', // Populate the `user` field inside each comment
+          select: 'nom prenom', // Fetch only the user's name and surname
+        },
+      });
       let found = await UserModel.findOne({ cin: cin1 }); 
       if (!candidat) {
         return res.status(404).render('error', { message: 'Candidat non trouvé' });  
       }
-
       res.render('detailsCandidats', { candidat , found });
     } catch (error) {
       res.status(500).send(error);  

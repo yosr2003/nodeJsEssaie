@@ -1,5 +1,4 @@
 <!-- End Head -->
-
 <h1 class="p-relative">Détailles du candidat</h1>
 <div class="profile-page m-20">
   <!-- Start Overview -->
@@ -8,6 +7,10 @@
       <img class="rad-half mb-10" src="<%= candidat.PhotoURL %>" alt="" />
       <h3 class="m-0"><%= candidat.nom %> <%= candidat.prenom %></h3>
       <p class="c-grey mt-10"><%= candidat.PartPolytique %></p>
+      <span class="c-grey">
+        <i class="fa-regular fa-user"></i>
+        <%= candidat.usersVotés.length %>
+      </span>
       <div class="level rad-6 bg-eee p-relative">
         <span style="width: 70%"></span>
       </div>
@@ -19,6 +22,20 @@
         <i class="fa-solid fa-star c-orange fs-13"></i>
       </div>
       <p class="c-grey m-0 fs-13">550 Rating</p>
+      <!-- toggleFavoriteButton -->
+      favorise:<i class="fa-star c-orange fs-13 <%= candidat.FavorisésPar.some(user => user._id.toString() === found._id.toString()) ? 'fa-solid' : 'fa-regular' %> favorite-icon" onclick="toggleFavorite(this, '<%= candidat._id %>', '<%= found._id %>')"></i>
+      <!-- toggleFavoriteButton -->
+      <br>
+       <!-- VotingButton -->
+      <a <%= found.ElectionCandidat ? 'style="pointer-events: none; opacity: 0.6; cursor: not-allowed;"' : '' %> 
+        class="bg-green c-white btn-shape" 
+        type="button" 
+        onclick="<%= found.ElectionCandidat ? '' : `voter('${candidat._id}', '${found._id}')` %>" 
+        href="javascript:void(0)">
+        <i class="fa-solid fa-thumbs-up"></i> 
+        <%= found.ElectionCandidat ? 'already voted' : 'Vote' %>
+     </a>
+      <!-- VotingButton -->
     </div>
     <div class="info-box w-full txt-c-mobile">
       <!-- Start Information Row -->
@@ -181,7 +198,61 @@
             </div>
           </div>
           <!-- End Other Data -->
+
+          <div class="projects p-20 bg-white rad-10 m-20">
+            <!-- Start ajout Commentaire -->
+           <div class="quick-draft p-20 bg-white rad-10">
+            <h2 class="mt-0 mb-10">ajouter un commentaire</h2>
+            <p class="mt-0 mb-20 c-grey fs-15">Write A Draft For Your Ideas</p>
+           <form action="/comment" method="POST">
+             <input class="d-block mb-20 w-full p-10 b-none bg-eee rad-6" type="text" placeholder="ajouter un commentaire" name="commentaire"/>
+             <input type="hidden" name="userId" value="<%= found._id %>">
+             <input type="hidden" name="candidatId" value="<%= candidat._id %>">
+             <input class="save d-block fs-14 bg-blue c-white b-none w-fit btn-shape" type="submit" value="ajout" />
+           </form>
+           </div>
+           
+          </div>
+           <!-- End ajout Commentaire -->
+          <div class="projects p-20 bg-white rad-10 m-20">
+           <!-- Start liste de Commentaires -->
+
+           <div class="latest-post p-20 bg-white rad-10 p-relative">
+            <% candidat.Comments.forEach(c=>{ %>
+            <div id="comment-<%= c._id %>">
+            <h2 class="mt-0 mb-25">Latest Post</h2>
+            <div class="top d-flex align-center">
+              <img class="avatar mr-15" src="/images/avatar.png" alt="" />
+              <div class="info">
+                <span class="d-block mb-5 fw-bold"><%= c.user.nom %>  <%= c.user.prenom %></span>
+                <span class="c-grey"><%= c.createdAt %></span>
+              </div>
+            </div>
+            <div class="post-content txt-c-mobile pt-20 pb-20 mt-20 mb-20">
+              <%= c.commentaire %>
+            </div>
+            <div class="post-stats between-flex c-grey">
+              <div>
+                <i class="fa-regular fa-heart"></i>
+                <span>1.8K</span>
+              </div>
+              <div>
+                <i class="fa-regular fa-comments"></i>
+                <span>500</span>
+              </div>
+            </div>
+            <% }); %>
+            </div>
+           </div>
+          
+           <!-- End liste de Commentaires  -->
+          
         </div>
+        
       </div>
+      
     </div>
+    
+    
+    
 

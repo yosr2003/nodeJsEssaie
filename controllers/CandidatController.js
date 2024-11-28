@@ -94,7 +94,7 @@ const CandidatController = {
  
   searchCandidate : async (req, res) => {
     try {
-      const { name, cinUser } = req.query; // Extract search term and user CIN from query
+      const { name, cinUser, parti } = req.query; // Extract search term and user CIN from query
   
       // Split the name into two parts (nom and prenom) using space as the delimiter
       const nameParts = name.split(' ');
@@ -132,6 +132,9 @@ const CandidatController = {
   
       // Redirect to the candidate's details page
       res.redirect(`/DetailsCandidats/${candidate.cin}/ForUser/${cinUser}`);
+   
+
+
     } catch (error) {
       console.error('Error searching for candidate by name:', error);
       res.status(500).render('error', { message: 'An error occurred during the search.' });

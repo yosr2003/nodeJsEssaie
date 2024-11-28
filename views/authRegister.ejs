@@ -25,15 +25,15 @@
 <div class="container">
     <div class="forms-container">
       <div class="signin-signup">
-        <form action="#" class="sign-in-form">
+        <form action="/authRegister/signin" method="POST" class="sign-in-form">
           <h2 class="title">Sign in</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" />
+            <input type="text" name="email" placeholder="email" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" />
+            <input type="password"  name="motDePasse" placeholder="mot de passe" />
           </div>
           <input type="submit" value="Login" class="btn solid" />
           <p class="social-text">Or Sign in with social platforms</p>
@@ -52,37 +52,64 @@
             </a>
           </div>
         </form>
-        <form action="#" class="sign-up-form">
+
+
+<!-- ----------------------------------------------------------------- -->
+        <form action="/authRegister/signup" method="POST" class="sign-up-form">
           <h2 class="title">Sign up</h2>
+        
+          
+          <div class="input-field">
+            <i class="fas fa-id-card"></i>
+            <input type="number" name="cin" placeholder="CIN" required />
+          </div>
+        
+          <!-- Nom -->
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" />
+            <input type="text" name="nom" placeholder="Nom" required />
           </div>
+        
+          <!-- Prénom -->
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" name="prenom" placeholder="Prénom" required />
+          </div>
+        
+          <!-- Date de naissance -->
+          <div class="input-field">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="date" name="dateNais" placeholder="Date de naissance" required />
+          </div>
+        
+          <!-- Adresse -->
+          <div class="input-field">
+            <i class="fas fa-home"></i>
+            <input type="text" name="address" placeholder="Adresse" required />
+          </div>
+        
+          <!-- Email -->
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email" />
+            <input type="email" name="email" placeholder="Email" required />
           </div>
+        
+          <!-- Mot de passe -->
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" />
+            <input type="password" name="motDePasse" placeholder="Mot de passe" required />
           </div>
+        
+          <!-- Bouton de soumission -->
           <input type="submit" class="btn" value="Sign up" />
-          <p class="social-text">Or Sign up with social platforms</p>
-          <div class="social-media">
-            <a href="#" class="social-icon">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fab fa-google"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-          </div>
+        
+          <!-- Texte social -->
+          
         </form>
+        
+
+
+<!-- ----------------------------------------------------------------- -->
       </div>
     </div>
 

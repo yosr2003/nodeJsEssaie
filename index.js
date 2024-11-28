@@ -8,6 +8,7 @@ import candidatRoute from "./Routes/CandidatRoute.js";
 import CommentRoutes from "./Routes/CommentRoutes.js";
 import authRegister from "./Routes/AuthRegister.js";
 import ejsLayout from 'express-ejs-layouts';
+import cookieParser from "cookie-parser";
 
 // Initialize Express app
 const app = express();
@@ -22,14 +23,16 @@ app.use(express.static("docjs"));
 app.set('layout','layout');
 //analyse form html
 app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 //routes
 app.use(bodyParser.json());
+app.use(authRegister); 
 app.use(express.json());
 app.use(route); 
 app.use(candidatRoute); 
 app.use(CommentRoutes); 
-app.use(authRegister); 
+
 
 
 

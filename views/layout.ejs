@@ -81,6 +81,58 @@
                     <input type="hidden" name="cinUser" value="<%= found.cin %>">
                 </form>
             </div>
+
+            <div class="search p-relative">
+              <!-- Search Form -->
+              <form action="/candidats/<%= found.cin %>" method="GET">
+                
+                <!-- Sélecteur de parties -->
+                <select 
+                    name="partie" 
+                    class="p-10" 
+                    style="
+                        flex: 1; 
+                        padding: 10px; 
+                        border: 2px solid #ccc; 
+                        border-radius: 5px; 
+                        font-size: 16px; 
+                        background-color: #f9f9f9; 
+                        color: #333; 
+                        outline: none; 
+                        transition: border-color 0.3s;
+                    "
+                    onfocus="this.style.borderColor='#007bff';" 
+                    onblur="this.style.borderColor='#ccc';"
+                    id="partiesSelect"
+                    onchange="this.form.submit()"
+                >
+                  <option value="" disabled selected>Choisir une partie</option>
+                </select>
+            
+                <input type="hidden" name="cinUser" value="<%= found.cin %>">
+              </form>
+            
+              <script>
+                fetch('/distinctParties')
+                  .then(response => response.json())
+                  .then(parties => {
+                      if (!Array.isArray(parties)) {
+                          throw new Error('La réponse n’est pas un tableau');
+                      }
+                      const select = document.getElementById('partiesSelect');
+                      parties.forEach(partie => {
+                          const option = document.createElement('option');
+                          option.value = partie;
+                          option.textContent = partie;
+                          select.appendChild(option);
+                      });
+                  })
+                  .catch(error => console.error('Erreur lors de la récupération des parties politiques:', error));
+              </script>
+            </div>
+            
+
+          
                 <div class="icons d-flex align-center">
                     <span class="notification p-relative">
                         <i class="fa-regular fa-bell fa-lg"></i>

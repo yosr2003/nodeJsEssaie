@@ -17,6 +17,7 @@ route.get('/resultatElection',validateToken, (req, res) => {
   
 route.post("/candidats/create",validateToken, CandidatController.create);
 route.get('/searchCandidate',validateToken, CandidatController.searchCandidate);
+route.get('/distinctParties',validateToken, CandidatController.AllPartiesPolytiques);
 
 
 

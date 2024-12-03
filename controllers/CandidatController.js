@@ -2,20 +2,29 @@ import CandidatModel from "../Models/Candidat.js";
 import UserModel from "../Models/User.js"; // Ensure this imports the correct Mongoose model
 
 const CandidatController = { 
-   all: async (req, res) => {
+  all: async (req, res) => {
     try {
-      
-      let allCandidats = await CandidatModel.find().populate('FavorisésPar');
-      //juste pour le moment
+      const partie = req.query.partie || ''; // Récupérer la partie à partir des paramètres de requête
+      let allCandidats = [];
+
+      if (partie) {
+        allCandidats = await CandidatModel.find({ PartPolytique: partie }).populate('FavorisésPar');
+      } else {
+        allCandidats = await CandidatModel.find().populate('FavorisésPar');
+      }
+
+      // just pour le moment, récupérer l'utilisateur avec le CIN
       const cin = req.params.cin; 
       let found = await UserModel.findOne({ cin: cin }); 
-      //juste pour le moment 
-     res.render('view_candidats',{allCandidats, found});
-     
+
+      // Renvoyer la vue avec les candidats filtrés et l'utilisateur trouvé
+      res.render('view_candidats', { allCandidats, found });
     } catch (error) {
       res.status(500).send(error);
     }
   },
+
+
   
   voteCandidate : async (req, res) => {
     try{
@@ -162,6 +171,19 @@ const CandidatController = {
       res.status(500).send(error);  
     }
   },
+
+  AllPartiesPolytiques: async (req, res) => {
+    try {
+      const parties = await CandidatModel.distinct("PartPolytique");
+      console.log('Parties récupérées:', parties); 
+      res.status(200).json(parties); 
+    } catch (error) {
+      console.error('Erreur lors de la récupération des parties politiques:', error);
+      res.status(500).json({ error: "Erreur lors de la récupération des parties politiques" });
+    }
+  },
+  
+
 
 
    create : async (req, res) => {

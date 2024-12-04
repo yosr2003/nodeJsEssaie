@@ -13,6 +13,9 @@ const route = express.Router();
   route.post('/authRegister/signin', (req, res) => {
     authRegisterController.userLogin(req, res);
   });
+  route.post('/authRegister/logout', (req, res) => {
+    authRegisterController.userLogout(req, res);
+  });
   
   
 

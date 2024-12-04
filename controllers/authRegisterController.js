@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const authRegisterController = {
 
     userSignUp: async (req, res) => {
+        try {
         console.log(req.body);
         const { cin, nom, prenom, dateNais, address, email, motDePasse } = req.body;
 
@@ -25,9 +26,22 @@ const authRegisterController = {
             cin, nom, prenom, dateNais, address, email, motDePasse: hashPassword,
         });
 
-        // Redirect after successful signup
         res.redirect(`/users/${cin}`);
-    },
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            const errors = Object.keys(err.errors).reduce((acc, key) => {
+                acc[key] = err.errors[key].message;
+                return acc;
+            }, {});
+            return res.status(400).json({ message: "Erreur de validation", errors });
+        }
+    }
+
+
+},
+
+
+
 
     userLogin: async (req, res) => {
        const {email, motDePasse}=req.body;
@@ -44,7 +58,12 @@ const authRegisterController = {
         return res.redirect(`/users/${user.cin}`);
        }
 
-    }
+    },
+    userLogout: (req, res) => {
+        res.clearCookie("token");
+        res.redirect('/authRegister');
+      },
+  
 
 };
 

@@ -57,7 +57,11 @@
                 </a>
               </li>
               <li>
-                <a class="d-flex align-center fs-14 c-black rad-6 p-10" >
+                <a 
+                  class="d-flex align-center fs-14 c-black rad-6 p-10"
+                  href="javascript:void(0);" 
+                  onclick="logout()"
+                >
                   <i class="fa-solid fa-right-from-bracket fa-fw"></i>
                   <span>Deconnexion</span>
                 </a>
@@ -65,6 +69,22 @@
               
             </ul>
         </div>
+        <script>
+          function logout() {
+            fetch('/authRegister/logout', {
+              method: 'POST',
+              credentials: 'include' // Ensures cookies are sent with the request
+            })
+              .then(response => {
+                if (response.redirected) {
+                  window.location.href = response.url; // Redirect to the login page
+                } else {
+                  console.error('Logout failed');
+                }
+              })
+              .catch(error => console.error('Error:', error));
+          }
+        </script>
         <div class="content w-full">
             <!-- Start Head -->
             <div class="head bg-white p-15 between-flex">

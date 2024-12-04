@@ -87,6 +87,7 @@
         </script>
         <div class="content w-full">
             <!-- Start Head -->
+           
             <div class="head bg-white p-15 between-flex">
               <div class="search p-relative">
                 <!-- Search Form -->
@@ -100,9 +101,9 @@
                     />
                     <input type="hidden" name="cinUser" value="<%= found.cin %>">
                 </form>
-            </div>
+              </div>
 
-            <div class="search p-relative">
+             <div class="p-relative">
               <!-- Search Form -->
               <form action="/candidats/<%= found.cin %>" method="GET">
                 
@@ -159,7 +160,7 @@
                     </span>
                     <img  src="/images/avatar.png" alt="" />
                 </div>
-            </div>
+          </div>
             
                 <main>
                     <%- body %>

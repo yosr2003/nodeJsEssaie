@@ -124,6 +124,8 @@ const CandidatController = {
   searchCandidate : async (req, res) => {
     try {
       const { name, cinUser, parti } = req.query; // Extract search term and user CIN from query
+      let allCandidats = [];
+      let found = await UserModel.findOne({ cin: cinUser }); 
   
       // Split the name into two parts (nom and prenom) using space as the delimiter
       const nameParts = name.split(' ');
@@ -148,15 +150,15 @@ const CandidatController = {
   
       // If neither 'nom' nor 'prenom' is provided, return an error
       if (query.$or.length === 0) {
-        return res.status(400).render('error', { message: 'Please enter a name to search for.' });
+        res.render('view_candidats', { allCandidats, found });
       }
   
       // Search for a candidate based on the constructed query
       const candidate = await CandidatModel.findOne(query); 
   
       if (!candidate) {
-        // If no candidate is found, return an error
-        return res.status(404).render('error', { message: 'Candidate not found!' });
+        
+        res.render('view_candidats', { allCandidats, found });
       }
   
       // Redirect to the candidate's details page

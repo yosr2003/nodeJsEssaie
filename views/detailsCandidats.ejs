@@ -20,8 +20,9 @@
         <i class="fa-solid fa-star c-orange fs-13"></i>
         <i class="fa-solid fa-star c-orange fs-13"></i>
         <i class="fa-solid fa-star c-orange fs-13"></i>
+        <%= candidat.FavorisésPar.length %> 
       </div>
-      <p class="c-grey m-0 fs-13">550 Rating</p>
+     
       <!-- toggleFavoriteButton -->
       favorise:<i class="fa-star c-orange fs-13 <%= candidat.FavorisésPar.some(user => user._id.toString() === found._id.toString()) ? 'fa-solid' : 'fa-regular' %> favorite-icon" onclick="toggleFavorite(this, '<%= candidat._id %>', '<%= found._id %>')"></i>
       <!-- toggleFavoriteButton -->
@@ -139,7 +140,7 @@
             <!-- Start ajout Commentaire -->
            <div class="quick-draft p-20 bg-white rad-10">
             <h2 class="mt-0 mb-10">ajouter un commentaire</h2>
-            <p class="mt-0 mb-20 c-grey fs-15">Write A Draft For Your Ideas</p>
+            <p class="mt-0 mb-20 c-grey fs-15">exprimez vos opinions!</p>
            <form action="/comment" method="POST">
              <input class="d-block mb-20 w-full p-10 b-none bg-eee rad-6" type="text" placeholder="ajouter un commentaire" name="commentaire"/>
              <input type="hidden" name="userId" value="<%= found._id %>">
@@ -156,7 +157,7 @@
            <div class="latest-post p-20 bg-white rad-10 p-relative">
             <% candidat.Comments.forEach(c=>{ %>
             <div id="comment-<%= c._id %>">
-            <h2 class="mt-0 mb-25">Latest Post</h2>
+            <h2 class="mt-0 mb-25">Post</h2>
             <div class="top d-flex align-center">
               <img class="avatar mr-15" src="/images/avatar.png" alt="" />
               <div class="info">

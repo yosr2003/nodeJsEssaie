@@ -4,7 +4,7 @@ import UserModel from "../Models/User.js"; // Ensure this imports the correct Mo
 const CandidatController = { 
   all: async (req, res) => {
     try {
-      const partie = req.query.partie || ''; // Récupérer la partie à partir des paramètres de requête
+      const partie = req.query.partie || ''; 
       let allCandidats = [];
 
       if (partie) {
@@ -23,7 +23,27 @@ const CandidatController = {
       res.status(500).send(error);
     }
   },
+  ResultatElection: async (req, res) => {
+    try {
+      const partie = req.query.partie || ''; 
+      let allCandidats = [];
 
+      if (partie) {
+        allCandidats = await CandidatModel.find({ PartPolytique: partie }).populate('FavorisésPar');
+      } else {
+        allCandidats = await CandidatModel.find().populate('FavorisésPar');
+      }
+
+      // just pour le moment, récupérer l'utilisateur avec le CIN
+      const cin = req.params.cin; 
+      let found = await UserModel.findOne({ cin: cin }); 
+
+      // Renvoyer la vue avec les candidats filtrés et l'utilisateur trouvé
+      res.render('resultatElection', { allCandidats, found });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
 
   
   voteCandidate : async (req, res) => {

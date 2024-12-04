@@ -11,9 +11,8 @@ route.get('/Favoris', (req, res) => {
 route.get("/favoris/:cin",validateToken,CandidatController.favorites); 
 route.post('/toggleFavorite',validateToken, CandidatController.toggleFavorite);
 route.post('/voteCandidate',validateToken, CandidatController.voteCandidate);
-route.get('/resultatElection',validateToken, (req, res) => {
-    res.render('resultatElection'); 
-  });  
+route.get('/resultatElection/:cin',validateToken, CandidatController.ResultatElection
+  );  
   
 route.post("/candidats/create",validateToken, CandidatController.create);
 route.get('/searchCandidate',validateToken, CandidatController.searchCandidate);
